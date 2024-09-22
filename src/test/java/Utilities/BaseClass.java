@@ -29,7 +29,6 @@ public class BaseClass {
 			}
 			// Set the path to your local chromedriver.exe
 			System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
-
 			ChromeOptions options = new ChromeOptions();
 			// Optional: remove headless if not required
 			options.addArguments("--headless");
@@ -39,11 +38,16 @@ public class BaseClass {
 			options.addArguments("--disable-gpu");  // Disable GPU if not available
 			options.addArguments("--window-size=1920,1080");  // Set a window size to avoid resolution-related issues
 
-			driver = new ChromeDriver(options);
+			// driver = new ChromeDriver(options);
+			try {
+			    WebDriver driver = new ChromeDriver(options);
+			} catch (Exception e) {
+			    e.printStackTrace();
+			}
+
 			if (driver == null) {
 				System.out.println("----------------------------------------------------------------------------");
 			}
-
 			System.out.println("Chrome browser launched");
 		} else if (browserName.equals("firefox")) {
 			// Add Firefox driver initialization here if needed
