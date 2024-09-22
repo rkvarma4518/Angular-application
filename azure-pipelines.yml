@@ -1,0 +1,82 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+jobs:
+- job: Install
+  steps:
+    # Install Node.js (update to required version)
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '18.x'
+      displayName: 'Install Node.js 18.x'
+
+    # Install JDK 21
+    - task: JavaToolInstaller@0
+      inputs:
+        versionSpec: '21'
+        jdkArchitectureOption: 'x64'
+        jdkSourceOption: 'PreInstalled'
+      displayName: 'Install JDK 21'
+
+    # Install Chrome 128.0.6613.137
+    - script: |
+        wget -N https://storage.googleapis.com/chrome-for-testing-public/128.0.6613.137/linux64/chrome-linux64.zip
+        unzip chrome-linux64.zip
+        sudo mv chrome-linux64 /usr/local/bin/
+        sudo ln -sf /usr/local/bin/chrome-linux64/chrome /usr/bin/google-chrome
+        google-chrome --version
+      displayName: 'Install Chrome 128.0.6613.137'
+
+    # Install ChromeDriver 128.0.6613.137
+    - script: |
+        # Ensure unzip is installed
+        sudo apt-get install -y libnss3 libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 libxi6 libxtst6 libnss3 libcups2 libxss1 libxrandr2 libasound2 libatk1.0-0 libatk-bridge2.0-0 libgbm1
+        sudo apt-get update
+        sudo apt-get install -y unzip
+
+        # Remove any existing chromedriver-linux64.zip
+        if [ -f chromedriver-linux64.zip ]; then
+          echo "Removing existing chromedriver-linux64.zip"
+          rm chromedriver-linux64.zip
+        fi
+
+        # Download ChromeDriver
+        wget -N https://storage.googleapis.com/chrome-for-testing-public/128.0.6613.137/linux64/chromedriver-linux64.zip
+
+        # Unzip ChromeDriver
+        unzip chromedriver-linux64.zip
+
+        # Move ChromeDriver to /usr/local/bin/
+        sudo mv chromedriver-linux64/chromedriver /usr/local/bin/
+
+        # Set executable permissions
+        sudo chmod +x /usr/local/bin/chromedriver
+
+        # Verify installation
+        ls -l /usr/local/bin/chromedriver
+        chromedriver --version
+      displayName: 'Install and Verify ChromeDriver'
+
+- job: Build
+  dependsOn: Install
+  steps:
+    # Build with Maven
+    - script: |
+        mvn install
+      displayName: 'build jar'
+
+    # Run Cucumber Tests
+    - script: |
+        mvn test
+      displayName: 'Run Cucumber Tests'
+
+    # Publish build artifacts (Optional)
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: 'target'
+        artifactName: 'drop'
+        publishLocation: 'Container'
+      displayName: 'Publish Artifacts'
