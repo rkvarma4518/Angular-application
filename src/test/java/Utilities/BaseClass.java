@@ -24,9 +24,6 @@ public class BaseClass {
 		System.out.println(browserName);
 
 		if (browserName.equals("chrome")) {
-			if (driver == null) {
-				System.out.println("----------------------------------------------------------------------------");
-			}
 			// Set the path to your local chromedriver.exe
 			System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
 			ChromeOptions options = new ChromeOptions();
@@ -43,10 +40,6 @@ public class BaseClass {
 			    WebDriver driver = new ChromeDriver(options);
 			} catch (Exception e) {
 			    e.printStackTrace();
-			}
-
-			if (driver == null) {
-				System.out.println("----------------------------------------------------------------------------");
 			}
 			System.out.println("Chrome browser launched");
 		} else if (browserName.equals("firefox")) {
