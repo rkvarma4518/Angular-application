@@ -65,12 +65,12 @@ jobs:
   steps:
     # Build with Maven
     - script: |
-        mvn install
+        mvn test
       displayName: 'build jar'
 
     # Run Cucumber Tests
     - script: |
-        mvn test
+        mvn install
       displayName: 'Run Cucumber Tests'
 
     # Publish build artifacts (Optional)
