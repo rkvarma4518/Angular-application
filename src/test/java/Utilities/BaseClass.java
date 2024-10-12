@@ -22,7 +22,6 @@ public class BaseClass {
 
 		String browserName = PropertyReader.getValue("browser");
 		System.out.println(browserName);
-		WebDriver driver = null;
 
 		if (browserName.equals("chrome")) {
 			// Set the path to your local chromedriver.exe
@@ -65,7 +64,7 @@ public class BaseClass {
 			
 			return driver; // Return the driver at the end
 		} else {
-		    	throw new Exception("Driver initialization failed.");
+		    	System.out.println("Driver is null");
 		}
 	}
 
