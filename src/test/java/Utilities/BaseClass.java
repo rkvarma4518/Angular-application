@@ -37,7 +37,7 @@ public class BaseClass {
 
 			// driver = new ChromeDriver(options);
 			try {
-			    WebDriver driver = new ChromeDriver(options);
+			    driver = new ChromeDriver(options);
 			    System.out.println("Chrome driver launched");
 			} catch (Exception e) {
 			    System.out.println("Error : Chrome driver not launched");
