@@ -22,6 +22,7 @@ public class BaseClass {
 
 		String browserName = PropertyReader.getValue("browser");
 		System.out.println(browserName);
+		WebDriver driver = null;
 
 		if (browserName.equals("chrome")) {
 			// Set the path to your local chromedriver.exe
@@ -51,17 +52,21 @@ public class BaseClass {
 		}
 
 		// Ensure driver is initialized before using JavascriptExecutor
-		jsDriver = (JavascriptExecutor) driver;
-		ngWebDriver = new NgWebDriver(jsDriver);
-
-		driver.manage().deleteAllCookies();
-		driver.manage().window().maximize();
-		driver.get(PropertyReader.getValue("url"));
-
-		// Wait for Angular requests to finish
-		ngWebDriver.waitForAngularRequestsToFinish();
-
-		return driver;
+		if (driver != null) {
+		    	jsDriver = (JavascriptExecutor) driver;
+			ngWebDriver = new NgWebDriver(jsDriver);
+			
+			driver.manage().deleteAllCookies();
+			driver.manage().window().maximize();
+			driver.get(PropertyReader.getValue("url"));
+			
+			// Wait for Angular requests to finish
+			ngWebDriver.waitForAngularRequestsToFinish();
+			
+			return driver; // Return the driver at the end
+		} else {
+		    	throw new Exception("Driver initialization failed.");
+		}
 	}
 
 	protected void WaitUntilElementVisible(WebElement element) throws Exception {
