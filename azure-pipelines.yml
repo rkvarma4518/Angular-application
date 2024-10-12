@@ -37,11 +37,9 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y unzip
 
-        # Remove any existing chromedriver-linux64.zip
-        if [ -f chromedriver-linux64.zip ]; then
-          echo "Removing existing chromedriver-linux64.zip"
-          rm chromedriver-linux64.zip
-        fi
+        # Remove pre-installed ChromeDriver (if any)
+        sudo rm -f /usr/bin/chromedriver
+        sudo rm -f /usr/local/bin/chromedriver
 
         # Download ChromeDriver
         wget -N https://storage.googleapis.com/chrome-for-testing-public/128.0.6613.137/linux64/chromedriver-linux64.zip
