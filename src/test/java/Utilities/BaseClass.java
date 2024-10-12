@@ -38,10 +38,11 @@ public class BaseClass {
 			// driver = new ChromeDriver(options);
 			try {
 			    WebDriver driver = new ChromeDriver(options);
+			    System.out.println("Chrome browser launched");
 			} catch (Exception e) {
 			    e.printStackTrace();
 			}
-			System.out.println("Chrome browser launched");
+			
 		} else if (browserName.equals("firefox")) {
 			// Add Firefox driver initialization here if needed
 			throw new Exception("Firefox not yet supported.");
