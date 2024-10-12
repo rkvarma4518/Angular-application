@@ -65,6 +65,7 @@ jobs:
   steps:
     # Build with Maven
     - script: |
+        chromedriver --version
         mvn test
       displayName: 'Run Cucumber Tests'
 
