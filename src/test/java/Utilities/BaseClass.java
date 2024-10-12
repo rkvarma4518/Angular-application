@@ -38,8 +38,9 @@ public class BaseClass {
 			// driver = new ChromeDriver(options);
 			try {
 			    WebDriver driver = new ChromeDriver(options);
-			    System.out.println("Chrome browser launched");
+			    System.out.println("Chrome driver launched");
 			} catch (Exception e) {
+			    System.out.println("Error : Chrome driver not launched");
 			    e.printStackTrace();
 			}
 			
@@ -51,21 +52,17 @@ public class BaseClass {
 		}
 
 		// Ensure driver is initialized before using JavascriptExecutor
-		if (driver != null) {
-		    	jsDriver = (JavascriptExecutor) driver;
-			ngWebDriver = new NgWebDriver(jsDriver);
-			
-			driver.manage().deleteAllCookies();
-			driver.manage().window().maximize();
-			driver.get(PropertyReader.getValue("url"));
-			
-			// Wait for Angular requests to finish
-			ngWebDriver.waitForAngularRequestsToFinish();
-			
-			return driver; // Return the driver at the end
-		} else {
-		    	System.out.println("Driver is null");
-		}
+		jsDriver = (JavascriptExecutor) driver;
+		ngWebDriver = new NgWebDriver(jsDriver);
+		
+		driver.manage().deleteAllCookies();
+		driver.manage().window().maximize();
+		driver.get(PropertyReader.getValue("url"));
+		
+		// Wait for Angular requests to finish
+		ngWebDriver.waitForAngularRequestsToFinish();
+		
+		return driver; // Return the driver at the end
 	}
 
 	protected void WaitUntilElementVisible(WebElement element) throws Exception {
