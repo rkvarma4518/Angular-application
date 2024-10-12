@@ -58,9 +58,6 @@ jobs:
         chromedriver --version
       displayName: 'Install and Verify ChromeDriver'
 
-- job: Build
-  dependsOn: Install
-  steps:
     # Build with Maven
     - script: |
         chromedriver --version
