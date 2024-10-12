@@ -84,8 +84,8 @@
 
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-devtools-v128</artifactId>
-			<version>4.10.0</version> <!-- Make sure this matches your Selenium version -->
+			<artifactId>selenium-devtools</artifactId>
+			<version>4.10.0</version>
 		</dependency>
 		
 		<dependency>
