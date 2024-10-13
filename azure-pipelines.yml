@@ -58,16 +58,15 @@ jobs:
         chromedriver --version
       displayName: 'Install and Verify ChromeDriver'
 
+    # Run Cucumber Tests
+    - script: |
+        mvn test
+      displayName: 'Run Cucumber Tests'
+    
     # Build with Maven
     - script: |
         mvn install
       displayName: 'build jar'
-
-    # Run Cucumber Tests
-    - script: |
-        chromedriver --version
-        mvn test
-      displayName: 'Run Cucumber Tests'
 
     # Publish build artifacts (Optional)
     - task: PublishBuildArtifacts@1
